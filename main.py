@@ -1,13 +1,21 @@
 import pygame
 import random
 
+def choose_character(icon1, icon2, icon3):
+    print "Choose a character (1, 2, 3)"
+    print "1. Garfiekins"
+    print "2. Evil Ollie"
+    print "3. Moo Moo"
+    character = raw_input("> ")
+    return character
+
 def main():
     # declare the size of the canvas
     width = 900
     height = 900
     blue_color = (97, 159, 182)
-    play_area_width = 850
-    play_area_height = 850
+    play_area_width = 825
+    play_area_height = 825
     pygame.init()
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption('Treat Hunting')
@@ -83,9 +91,22 @@ def main():
             self.play_area_height = play_area_height
             self.speed_x = 0
             self.speed_y = 0
-        def update(self):
+        def update(self, speed):
             self.x += self.speed_x
-            self.y += self.speed_y    
+            self.y += self.speed_y 
+            if self.x >= play_area_width - 25:
+                self.speed_x = 0
+                self.x = play_area_width - 25
+            if self.y >= play_area_height:
+                self.speed_y = 0
+                self.y = play_area_height
+            if self.x <= 25:
+                self.speed_x = 0
+                self.x = 25
+            if self.y <= 25:
+                self.speed_y = 0
+                self.y = 25    
+   
         def render(self, screen):
             screen.blit(cat_image,(self.x, self.y))
 
@@ -153,7 +174,7 @@ def main():
                     cat.speed_x = -cat_speed
                 elif event.key == KEY_RIGHT:
                     cat.speed_x = cat_speed
-            
+                    
             if event.type == pygame.KEYUP:
                 # deactivate the cooresponding speeds
                 # when an arrow key is released
@@ -169,7 +190,7 @@ def main():
                 stop_game = True  
     
         # Game logic
-        cat.update()
+        cat.update(cat_speed)
 
         # Game display
         cat.render(screen)
