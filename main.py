@@ -2,7 +2,7 @@ import pygame
 import random
 from characters import *
 
-def choose_character(icon1, icon2, icon3):
+def menu(icon1, icon2, icon3):
     print "Choose a character (1, 2, 3)"
     print "1. Garfiekins"
     print "2. Evil Ollie"
@@ -10,7 +10,7 @@ def choose_character(icon1, icon2, icon3):
     character = raw_input("> ")
     return character
 
-def main():
+def main(): 
     # declare the size of the canvas
     width = 900
     height = 900
