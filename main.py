@@ -21,18 +21,20 @@ def main():
     pygame.display.set_caption('Treat Hunting')
     
     #Game initialization
-    background_image = pygame.transform.scale(pygame.image.load('images/background.png').convert_alpha(),(900,900))
-    cat_image = pygame.transform.scale(pygame.image.load('images/orange_cat.png').convert_alpha(),(80,70))
-    treats_image = pygame.transform.scale(pygame.image.load('images/treat_trophy.png').convert_alpha(),(70,80))
+    background_image = pygame.image.load('images/background.png').convert_alpha()
+    cat_image = pygame.image.load('images/orange_cat.png').convert_alpha()
+    treats_image = pygame.image.load('images/treat_trophy.png').convert_alpha()
     clock = pygame.time.Clock()
     
-    class Treats(object):
+    class Treats(object):#):
         def __init__(self,name, x, y, screen_width, screen_height):
+            #pygame.sprite.Sprite.__init__(self)
             self.name = name
             self.x = x
             self.y = y
             self.screen_width = screen_width
             self.screen_height = screen_height
+            #self.rect = self.image.get_rect()   
         def move_east(self, icon, speed):
             self.x += speed
             screen.blit(icon, (self.x, self.y))
@@ -106,7 +108,7 @@ def main():
             if self.y <= 25:
                 self.speed_y = 0
                 self.y = 25    
-   
+            #self.rect.topleft = self.x, self.y   
         def render(self, screen):
             screen.blit(cat_image,(self.x, self.y))
 
