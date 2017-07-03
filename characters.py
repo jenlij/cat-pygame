@@ -27,7 +27,7 @@ class Characters(pygame.sprite.Sprite):
         col = pygame.sprite.collide_rect(self, sprite1)    
         if col == True:
             sprite1.alive = False
-            sound_effect.play(loops = 1, maxtime = 2000)
+            sound_effect.play(loops = 0, maxtime = 2000)
             
         
 class Treats(Characters):
@@ -82,4 +82,14 @@ class Cat(Characters):
 
 
 class Dodgees(Treats): #plastic bag and vacuum (and potentially the other 2 cats)
-    pass        
+    def check_collision(self, sprite1, sound_effect, sound_effect2, hits):
+        col = pygame.sprite.collide_rect(self, sprite1)  
+        if col == True:
+            sound_effect.play(loops = 0, maxtime = 2000)
+        if hits > 20:
+            sound_effect.stop()
+            sprite1.alive = False
+            sound_effect2.play(loops = 0, maxtime = 4000)
+        if hits > 25:
+            sound_effect2.stop()    
+        return col    
