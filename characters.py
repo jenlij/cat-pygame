@@ -21,8 +21,28 @@ class Characters(pygame.sprite.Sprite):
 
 
 class Treats(Characters):
-    def update(self, speed):
-        super(Treats, self).update(speed) 
+    def update(self, treats_speed, random_num):
+        if random_num == 1: #move N     
+            self.speed_y = -treats_speed
+        elif random_num == 2: #move S
+            self.speed_y = treats_speed
+        elif random_num == 3: #move E
+            self.speed_x = treats_speed
+        elif random_num == 4: #move W
+            self.speed_x = -treats_speed
+        elif random_num == 5: #move NE
+            self.speed_x = treats_speed
+            self.speed_y = -treats_speed
+        elif random_num == 6: #move NW
+            self.speed_x = -treats_speed
+            self.speed_y = -treats_speed  
+        elif random_num == 7: #move SE
+            self.speed_x = treats_speed
+            self.speed_y = treats_speed
+        elif random_num == 8: #move SW
+            self.speed_x = -treats_speed
+            self.speed_y = treats_speed 
+        
         if self.x >= self.play_area_width:
             self.x = 0
         if self.x <= 0:
@@ -40,31 +60,12 @@ class Treats(Characters):
         if self.x >= self.play_area_width or self.y <= 0:
             self.x = 0
             self.y = self.play_area_height
-        if self.x <= 0 or self.y >= self.y <= 0:
+        if self.x <= 0 or self.y <= 0: 
             self.x = self.play_area_width
             self.y = self.play_area_height
-    
+        super(Treats, self).update(treats_speed)     
 
-        if random_num == 1: #move N     
-            treats.speed_y = -treats_speed
-        elif random_num == 2: #move S
-            treats.speed_y = treats_speed
-        elif random_num == 3: #move E
-            treats.speed_x = treats_speed
-        elif random_num == 4: #move W
-            treats.speed_x = -treats_speed
-        elif random_num == 5: #move NE
-            treats.speed_x = treats_speed
-            treats.speed_y = -treats_speed
-        elif random_num == 6: #move NW
-            treats.speed_x = -treats_speed
-            treats.speed_y = -treats_speed  
-        elif random_num == 7: #move SE
-            treats.speed_x = treats_speed
-            treats.speed_y = treats_speed
-        elif random_num == 8: #move SW
-            treats.speed_x = -treats_speed
-            treats.speed_y = treats_speed 
+
 
 
 
