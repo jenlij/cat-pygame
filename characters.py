@@ -1,5 +1,5 @@
 import pygame
-
+#MAIN FILE
 class Characters(pygame.sprite.Sprite):
     def __init__(self,name, x, y, play_area_width, play_area_height, icon):
         pygame.sprite.Sprite.__init__(self)

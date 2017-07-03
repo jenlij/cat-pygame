@@ -1,7 +1,7 @@
 import pygame
 import random
 from characters import *
-
+#MAIN FILE
 def main(): 
     # declare the size of the canvas
     width = 900
