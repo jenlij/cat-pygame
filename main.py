@@ -2,14 +2,6 @@ import pygame
 import random
 from characters import *
 
-def menu(icon1, icon2, icon3):
-    print "Choose a character (1, 2, 3)"
-    print "1. Garfiekins"
-    print "2. Evil Ollie"
-    print "3. Moo Moo"
-    character = raw_input("> ")
-    return character
-
 def main(): 
     # declare the size of the canvas
     width = 900
@@ -35,16 +27,16 @@ def main():
     #initialize treats
     treats_x = 50
     treats_y = 50
-    treats = Treats("Treat Trophy", treats_x, treats_y, width, height)
-    treats_speed = 4
+    treats = Treats("Treat Trophy", treats_x, treats_y, play_area_width, play_area_height, treats_image)
+    treats_speed = 3
     random_num = 3
     change_dir_countdown = 120
     
     #initialize cat
     cat_x = 350
     cat_y = 350
-    cat_speed = 5
-    cat = Cat("Garfiekins", cat_x, cat_y, play_area_width, play_area_height)
+    cat_speed = 4
+    cat = Cat("Garfiekins", cat_x, cat_y, play_area_width, play_area_height, cat_image)
 
 
     stop_game = False
@@ -56,10 +48,7 @@ def main():
         #move the treats random directions
         if change_dir_countdown == 0:
             change_dir_countdown = 120
-            random_num = random.randint(1,8)
-        random_num = 1    
-                
-       
+            random_num = random.randint(1,8)         
         change_dir_countdown -= 1 
 
         for event in pygame.event.get():
@@ -92,11 +81,13 @@ def main():
                 stop_game = True  
     
         # Game logic
+        treats.update(treats_speed, random_num) 
         cat.update(cat_speed)
 
         # Game display
-        cat.render(screen, cat_image)
         treats.render(screen, treats_image)
+        cat.render(screen, cat_image)
+        
         pygame.display.update()
         clock.tick(60)
         
