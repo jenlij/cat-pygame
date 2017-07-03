@@ -1,6 +1,5 @@
 import pygame
 import random
-
 from characters import *
 #MAIN FILE
 def main(): 
