@@ -9,6 +9,7 @@ def main():
     width = 900
     height = 900
     blue_color = (97, 159, 182)
+    black_color = (0, 0, 0)
     play_area_width = 825
     play_area_height = 825
     pygame.mixer.pre_init(44100, -16, 2, 2048)
@@ -24,6 +25,7 @@ def main():
     vac_image = pygame.image.load('images/vacuum.png').convert_alpha()
     bag_image = pygame.image.load('images/evil_bag.png').convert_alpha()
     end_screen = pygame.image.load('images/end_screen.jpg').convert_alpha()
+    win_screen = pygame.image.load('images/win.jpg').convert_alpha()
     
     clock = pygame.time.Clock()
     pygame.mixer.music.load(os.path.join('sounds', 'Cowboy_Bebop.mp3'))#load background music
@@ -70,9 +72,11 @@ def main():
     random_num5 = 5
 
     hits = 0
+    caught_treats = False
     check = [False, False, False, False]
-
+    
     stop_game = False
+    keep_playing = True
     while not stop_game:
         # Draw background
         screen.fill(blue_color)
@@ -125,8 +129,10 @@ def main():
         bag2.update(bag_speed, random_num5) 
         cat.update(cat_speed)
 
-        cat.check_collision(treats, purr)
-        if cat.alive == True:
+        if treats.alive == True and keep_playing == True:
+            caught_treats = cat.check_collision(treats, purr)
+
+        if cat.alive == True and keep_playing == True:
             check[0] = vac.check_collision(cat, scream, fail, hits)
             check[1] = bag.check_collision(cat, scream, fail, hits)
             check[2] = vac2.check_collision(cat, scream, fail, hits)
@@ -134,20 +140,35 @@ def main():
             for i in check:
                 if i:
                     hits += 1
-                    print hits
+                    
         
         # Game display
-        treats.render(screen, treats_image)
-        cat.render(screen, cat_image)
-        vac.render(screen, vac_image)
-        bag.render(screen, bag_image)
-        vac2.render(screen, vac_image)
-        bag2.render(screen, bag_image)
+        if keep_playing == True:
+            treats.render(screen, treats_image)
+            cat.render(screen, cat_image)
+            vac.render(screen, vac_image)
+            bag.render(screen, bag_image)
+            vac2.render(screen, vac_image)
+            bag2.render(screen, bag_image)
         
-        if cat.alive == False:
-            screen.blit(end_screen,(0,0))
-            hits = 0
+        if caught_treats == True:
+            font = pygame.font.Font(None, 50)
+            text = font.render('YOU WIN! YAY!', True, black_color)
+            screen.blit(win_screen, (0,0))
+            screen.blit(text, (300,800)) 
+            keep_playing = False
             
+
+        if cat.alive == False:
+            font = pygame.font.Font(None, 50)
+            text = font.render('YOU GOT SPOOKED!', True, black_color)
+            screen.blit(end_screen, (0,0))
+            screen.blit(text, (300,800))
+            hits = 0
+            keep_playing = False
+
+
+
         pygame.display.update()
         clock.tick(60)
         

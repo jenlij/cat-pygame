@@ -28,7 +28,7 @@ class Characters(pygame.sprite.Sprite):
         if col == True:
             sprite1.alive = False
             sound_effect.play(loops = 0, maxtime = 2000)
-            
+        return col
         
 class Treats(Characters):
     def update(self, speed, random_num):
