@@ -1,5 +1,6 @@
 import pygame
 import random
+#original version before character refactoring
 
 def choose_character(icon1, icon2, icon3):
     print "Choose a character (1, 2, 3)"
@@ -80,7 +81,7 @@ def main():
             self.x -= speed
             self.y -= speed   
             screen.blit(icon, (self.x, self.y))     
-            if self.x <= 0 or self.y >= self.y <= 0:
+            if self.x <= 0 or self.y <= 0:
                 self.x = self.screen_width
                 self.y = self.screen_height
     
