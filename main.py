@@ -57,24 +57,9 @@ def main():
         if change_dir_countdown == 0:
             change_dir_countdown = 120
             random_num = random.randint(1,8)
-
-        if random_num == 1:     
-            treats.move_east(treats_image, treats_speed)
-        elif random_num == 2:
-            treats.move_west(treats_image, treats_speed)
-        elif random_num == 3:
-            treats.move_north(treats_image, treats_speed)          
-        elif random_num == 4:
-            treats.move_south(treats_image, treats_speed)
-        elif random_num == 5:
-            treats.move_ne(treats_image, treats_speed)
-        elif random_num == 6:
-            treats.move_nw(treats_image, treats_speed)
-        elif random_num == 7:
-            treats.move_se(treats_image, treats_speed)   
-        elif random_num == 8:
-            treats.move_sw(treats_image, treats_speed)                   
-
+        random_num = 1    
+                
+       
         change_dir_countdown -= 1 
 
         for event in pygame.event.get():
@@ -111,9 +96,10 @@ def main():
 
         # Game display
         cat.render(screen, cat_image)
+        treats.render(screen, treats_image)
         pygame.display.update()
         clock.tick(60)
-
+        
     pygame.quit()
 
 if __name__ == '__main__':
