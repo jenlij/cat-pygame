@@ -12,37 +12,46 @@ class Characters(pygame.sprite.Sprite):
         self.play_area_height = play_area_height
         self.image = icon
         self.rect = self.image.get_rect() 
-    
+        self.alive = True
+
     def update(self, speed):
         self.x += self.speed_x
         self.y += self.speed_y 
-        
+        self.rect.topleft = self.x, self.y
+
     def render(self, screen, icon):
-        screen.blit(icon,(self.x, self.y))
+        if self.alive == True:
+            screen.blit(icon,(self.x, self.y))
 
-
+    def check_collision(self, sprite1, sound_effect):
+        col = pygame.sprite.collide_rect(self, sprite1)    
+        if col == True:
+            sprite1.alive = False
+            sound_effect.play(loops = 1, maxtime = 2000)
+            
+        
 class Treats(Characters):
-    def update(self, treats_speed, random_num):
+    def update(self, speed, random_num):
         if random_num == 1: #move N     
-            self.speed_y = -treats_speed
+            self.speed_y = -speed
         elif random_num == 2: #move S
-            self.speed_y = treats_speed
+            self.speed_y = speed
         elif random_num == 3: #move E
-            self.speed_x = treats_speed
+            self.speed_x = speed
         elif random_num == 4: #move W
-            self.speed_x = -treats_speed
+            self.speed_x = -speed
         elif random_num == 5: #move NE
-            self.speed_x = treats_speed
-            self.speed_y = -treats_speed
+            self.speed_x = speed
+            self.speed_y = -speed
         elif random_num == 6: #move NW
-            self.speed_x = -treats_speed
-            self.speed_y = -treats_speed  
+            self.speed_x = -speed
+            self.speed_y = -speed  
         elif random_num == 7: #move SE
-            self.speed_x = treats_speed
-            self.speed_y = treats_speed
+            self.speed_x = speed
+            self.speed_y = speed
         elif random_num == 8: #move SW
-            self.speed_x = -treats_speed
-            self.speed_y = treats_speed 
+            self.speed_x = -speed
+            self.speed_y = speed 
 
         if self.x > self.play_area_width:
             self.x = 0
@@ -52,7 +61,7 @@ class Treats(Characters):
             self.y = 0
         if self.y < 0:
             self.y = self.play_area_height
-        super(Treats, self).update(treats_speed)     
+        super(Treats, self).update(speed)     
 
 
 class Cat(Characters):
@@ -72,5 +81,5 @@ class Cat(Characters):
             self.y = 25      
 
 
-class Dodgees(Characters): #plastic bag and vacuum (and potentially the other 2 cats)
+class Dodgees(Treats): #plastic bag and vacuum (and potentially the other 2 cats)
     pass        
