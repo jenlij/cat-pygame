@@ -3,7 +3,7 @@ import random
 from characters import *
 import os
 import time
-#MAIN FILE
+
 def main(): 
     # declare the size of the canvas
     width = 900
@@ -15,12 +15,19 @@ def main():
     pygame.mixer.pre_init(44100, -16, 2, 2048)
     pygame.init()
     screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption('Treat Hunting')
+    pygame.display.set_caption('Treat Hunters')
+    font = pygame.font.Font(None, 50)
     
     #Game initialization
     #load images
+    menu_image = pygame.image.load('images/main_menu.png').convert_alpha()
     background_image = pygame.image.load('images/background.png').convert_alpha()
     cat_image = pygame.image.load('images/orange_cat.png').convert_alpha()
+    #cat_image1 = pygame.image.load('images/orange_cat.png').convert_alpha()
+    #cat_image2 = pygame.image.load('images/skinny_cat.png').convert_alpha()
+    #cat_image3 = pygame.image.load('images/grey_cat.png').convert_alpha()
+    
+    
     treats_image = pygame.image.load('images/treat_trophy.png').convert_alpha()
     vac_image = pygame.image.load('images/vacuum.png').convert_alpha()
     bag_image = pygame.image.load('images/evil_bag.png').convert_alpha()
@@ -35,15 +42,16 @@ def main():
     pygame.mixer.music.set_volume(0.1)
     purr.set_volume(1)
     scream.set_volume(0.4)
+    fail.set_volume(0.5)
     pygame.mixer.music.play(-1) #play music nonstop                           
-
 
     KEY_UP = 273
     KEY_DOWN = 274
     KEY_LEFT = 276
     KEY_RIGHT = 275
+     
 
-    #initialize treats
+   #initialize treats
     treats = Treats("Treat Trophy", random.randint(50, 800), random.randint(50, 800), play_area_width, play_area_height, treats_image)
     treats_speed = 4
     random_num1 = 1
@@ -51,7 +59,7 @@ def main():
     
     #initialize cat
     cat_speed = 5
-    cat = Cat("Garfiekins", random.randint(300,500), random.randint(300,500), play_area_width, play_area_height, cat_image)
+    cat = Cat("Cat", random.randint(300,500), random.randint(300,500), play_area_width, play_area_height, cat_image)
 
     #initialize vacuum
     vac = Dodgees("Villainous Vacuum", random.randint(50, 800), random.randint(50, 800), play_area_width, play_area_height, vac_image)
@@ -77,7 +85,24 @@ def main():
     
     stop_game = False
     keep_playing = True
+    choose_character = True
     while not stop_game:
+        #Opening Screen (choose your character):
+        #if choose_character == True:
+            #screen.blit(menu_image,(0,0))
+            # for event in pygame.event.get():
+            #     if event.type == pygame.KEYDOWN:
+            #         if event.key == pygame.K_1:
+            #             cat_image = cat_image1
+            #             choose_character = False
+            #         elif event.key == pygame.K_2:
+            #             cat_image = cat_image2
+            #             choose_character = False
+            #         else:
+            #             cat_image = cat_image3
+            # cat = Cat("Cat", random.randint(300,500), random.randint(300,500), play_area_width, play_area_height, cat_image)
+            
+
         # Draw background
         screen.fill(blue_color)
         screen.blit(background_image,(0,0))
@@ -152,21 +177,30 @@ def main():
             bag2.render(screen, bag_image)
         
         if caught_treats == True:
-            font = pygame.font.Font(None, 50)
-            text = font.render('YOU WIN! YAY!', True, black_color)
+            text_win = font.render('YAY YOU WIN!', True, black_color)
             screen.blit(win_screen, (0,0))
-            screen.blit(text, (300,800)) 
+            screen.blit(text_win, (300,750)) 
             keep_playing = False
             
-
         if cat.alive == False:
-            font = pygame.font.Font(None, 50)
-            text = font.render('YOU GOT SPOOKED!', True, black_color)
+            text_lose = font.render('YOU GOT SPOOKED!', True, black_color)
             screen.blit(end_screen, (0,0))
-            screen.blit(text, (300,800))
+            screen.blit(text_lose, (300,750))
             hits = 0
             keep_playing = False
 
+        if keep_playing == False: #play again?
+            text_play_again = font.render('Hit ENTER to play again!', True, black_color) 
+            screen.blit(text_play_again,(300,800)) 
+            events = pygame.event.get()
+            for event in events:
+                if (event.type == pygame.KEYDOWN) and (event.key == pygame.K_RETURN): #this doesn't always work
+                    hits = 0
+                    caught_treats = False
+                    check = [False, False, False, False]
+                    keep_playing = True
+                    cat.alive = True
+                    treats.alive = True
 
 
         pygame.display.update()
